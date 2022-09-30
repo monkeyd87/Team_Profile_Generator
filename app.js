@@ -1,6 +1,8 @@
 const inquierer = require('inquirer')
 
 const Manager = require('./assets/manager')
+const Engineer = require('./assets/engineer')
+const Intern = require('./assets/intern')
 
 const team = [];
 
@@ -119,32 +121,61 @@ async function getData(){
     )
     let results =  await teamData
     
-    if(results.teamMember !== 'Quit'){
+    switch(results.teamMember){
+        case 'Manager':
+            managerSubMenu(results.teamMember);
+            break;
+        case 'Intern':
+            internSubMenu(results.teamMember);
+            break;
+            
+        case 'Engineer':
+            engineerSubMenu(results.teamMember);
+            break;
 
-        switch(results.teamMember){
-            case 'Manager':
-                managerSubMenu(results.teamMember);
-                break;
-            case 'Intern':
-                internSubMenu(results.teamMember);
-                break;
-                
-            case 'Engineer':
-                engineerSubMenu(results.teamMember);
-                break;
-            default:
-                console.log('error');
-                break;
-        }
-    }else{
-        return
+        case 'Quit':
+            assignClasses()
+            break;
+        default:
+            console.log('error');
+            break;
     }
-
-       
    
+    // assignClasses(teamData)
     
 }
 
 
 
+
+function assignClasses(f){
+    const teamMembers = []
+
+    for(let member of team){
+        switch(member.roll){
+            case 'Manager':
+               
+                teamMembers.push(new Manager(member.name,member.email,member.officeNumber));
+                break;
+
+            case 'Intern':
+            
+            teamMembers.push(new Intern(member.name,member.email,member.school));
+            break;
+
+            case 'Engineer':
+               
+                teamMembers.push(new Engineer(member.name,member.email,member.gitHub));
+                break;
+                
+        }
+    }
+    console.log(teamMembers[0])
+    return teamMembers
+}
+
+
+
+
 getData()
+
