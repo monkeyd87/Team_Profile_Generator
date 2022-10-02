@@ -1,0 +1,9 @@
+.card{
+    height:200px;
+    width: auto;
+    border: 1px black solid;
+    margin: 8px;
+    border-radius:5% ;
+    overflow: hidden;
+
+}
